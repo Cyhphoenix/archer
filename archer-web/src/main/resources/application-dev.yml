@@ -1,0 +1,63 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: blog-web
+
+logging:
+  config: classpath:log4j2.xml
+
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    database: 0
+#    password: 987654
+#    timeout: PT30S
+#    lettuce:
+#      pool:
+#        #连接池最大连接数（使用负值表示没有限制）
+#        max-active: 8
+#        #连接池中的最大空闲连接
+#        max-idle: 8
+#        #连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-wait: -PT1S
+#        #连接池中的最小空闲连接
+#        min-idle: 0
+
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/test?zeroDateTimeBehavior=CONVERT_TO_NULL&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456789
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      connection-test-query: select 1
+#      connection-timeout: 5000
+#      maximum-pool-size: 20
+#      minimum-idle: 1
+#      idle-timeout: 15000
+
+
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+#  instance:
+#    # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+#    prefer-ip-address: true
+#    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+#    hostname: 127.0.0.1
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: always
+#    hystrix:
+#      stream:
+#        enabled: true
+

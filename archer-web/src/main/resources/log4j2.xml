@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <property name="LOG_HOME">/usr/local/var/log/archer</property>
+        <property name="WEB_LOG">web.log</property>
+        <property name="LOGIN_LOG">login.log</property>
+        <property name="REQUEST_LOG">request.log</property>
+        <property name="ERROR_LOG">error.log</property>
+        <property name="PATTERN_LAYOUT">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %m %n</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMisMatch="DENY"/>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %highlight{%logger{36}}- %msg%n"/>
+        </Console>
+
+        <RollingRandomAccessFile
+                name="requestLogFile"
+                fileName="${LOG_HOME}/${REQUEST_LOG}"
+                filePattern="${LOG_HOME}/${REQUEST_LOG}.%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile
+                name="loginLogFile"
+                fileName="${LOG_HOME}/${LOGIN_LOG}"
+                filePattern="${LOG_HOME}/${LOGIN_LOG}.%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile
+                name="webLogFile"
+                fileName="${LOG_HOME}/${WEB_LOG}"
+                filePattern="${LOG_HOME}/${WEB_LOG}.%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile
+                name="errorLogFile"
+                fileName="${LOG_HOME}/${ERROR_LOG}"
+                filePattern="${LOG_HOME}/${ERROR_LOG}.%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <!-- 只记录error级别信息 -->
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+    </appenders>
+
+    <!-- 全局配置，默认所有的Logger都继承此配置 -->
+    <Loggers>
+        <Root level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="webLogFile"/>
+            <AppenderRef ref="errorLogFile"/>
+        </Root>
+
+        <Logger name="request" level="info">
+            <AppenderRef ref="requestLogFile"/>
+        </Logger>
+        <Logger name="login" level="info">
+            <AppenderRef ref="loginLogFile"/>
+        </Logger>
+        <Logger name="web" level="info">
+            <AppenderRef ref="webLogFile"/>
+        </Logger>
+    </Loggers>
+</configuration>
