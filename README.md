@@ -1,5 +1,3 @@
-[TOC]
-
 # 系统架构(技术点)
 * Spring Boot 2.0.8.RELEASE
 * Spring Cloud Finchley.SR2
